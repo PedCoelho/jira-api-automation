@@ -1,0 +1,31 @@
+<html>
+
+<head>
+  <title>Express</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+  <h1>SPASSU Tecnologia . JIRA API Automation</h1>
+  <p>This is an Express application build to provide endpoints for handling JIRA API requests</p>
+  <br />
+  <h3>Available endpoints</h3>
+  <ul>
+    <li>
+      <h4>getprojects</h4>
+      <p>Returns all project names and keys from Atlassian API</p>
+    </li>
+    <li>
+      <h4>getsprintreport/{projectKey}</h4>
+      <p>Returns Sprint report data for last closed Sprint in a given project key.</p>
+      <p>Includes completed tasks (key,url,summary,description), startDate, endDate, completedDate, sprintName and a few
+        more fields.</p>
+    </li>
+    <li>
+      <h4>createtasks</h4>
+      <p>to be implemented...</p>
+    </li>
+  </ul>
+</body>
+
+</html>

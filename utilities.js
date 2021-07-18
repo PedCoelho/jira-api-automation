@@ -2,8 +2,12 @@ const axios = require("axios");
 
 module.exports = {
   getProjects: async () => {
-    let all_projects = await getProjects();
-    return all_projects.map((x) => new Object({ name: x.name, key: x.key }));
+    try {
+      let all_projects = await getProjects();
+      return all_projects.map((x) => new Object({ name: x.name, key: x.key }));
+    } catch (e) {
+      return e;
+    }
   },
   getReport: async (project_name, sprint_number) => {
     let board = await axios(
@@ -30,33 +34,33 @@ module.exports = {
       sprint: {
         name: report.sprint.name,
         goal: report.sprint.goal,
-        startDate: report.sprint.startDate,
-        endDate: report.sprint.endDate,
-        completedDate: report.sprint.completeDate,
+        startDate: report.sprint.isoStartDate,
+        endDate: report.sprint.isoEndDate,
+        completedDate: report.sprint.isoCompleteDate,
         parsedDates: {
-          startDate: new Date(report.sprint.startDate)
-            .toLocaleString("default", {
+          startDate: new Date(report.sprint.isoStartDate)
+            .toLocaleString("pt-BR", {
               year: "numeric",
               month: "short",
               day: "numeric",
             })
-            .replace(/ de/g, "/")
+            .replace(/ de /g, "/")
             .replace(/ |\./g, ""),
-          endDate: new Date(report.sprint.endDate)
-            .toLocaleString("default", {
+          endDate: new Date(report.sprint.isoEndDate)
+            .toLocaleString("pt-BR", {
               year: "numeric",
               month: "short",
               day: "numeric",
             })
-            .replace(/ de/g, "/")
+            .replace(/ de /g, "/")
             .replace(/ |\./g, ""),
-          completedDate: new Date(report.sprint.completeDate)
-            .toLocaleString("default", {
+          completedDate: new Date(report.sprint.isoCompleteDate)
+            .toLocaleString("pt-BR", {
               year: "numeric",
               month: "short",
               day: "numeric",
             })
-            .replace(/ de/g, "/")
+            .replace(/ de /g, "/")
             .replace(/ |\./g, ""),
         },
       },
