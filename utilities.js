@@ -152,7 +152,7 @@ async function findDod(issue_obj) {
   //   ?.flatMap((x) => x.content.map((x) => x.text))
   //   ?.join(" ");
 
-  let separator = String.fromCharCode(13);
+  let separator = String.fromCharCode(10);
 
   let parseText = (content) => {
     let extractedText = extractText(content);
