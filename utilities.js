@@ -147,11 +147,42 @@ async function findDod(issue_obj) {
 
   //let dod = issue_details.renderedFields.description.replace(/<.*?>/g,'').replace(/(\r\n|\n|\r)/gm,' ')
 
+  // let parsed_desc = issue_details.fields?.description?.content
+  //   ?.filter((x) => x.type == "paragraph")
+  //   ?.flatMap((x) => x.content.map((x) => x.text))
+  //   ?.join(" ");
+
+  let separator = String.fromCharCode(13);
+
+  let parseText = (content) => {
+    let extractedText = extractText(content);
+    if (extractedText.length > 1) {
+      extractedText = extractedText
+        .map((text_segment) => "    -" + text_segment.trim())
+        .join(`${separator}`);
+    }
+    return extractedText;
+  };
+
   let parsed_desc = issue_details.fields?.description?.content
-    ?.filter((x) => x.type == "paragraph")
-    ?.flatMap((x) => x.content.map((x) => x.text))
-    ?.join(" ");
+    ?.map(parseText)
+    .join(`${separator}`);
 
   issue_obj.description = parsed_desc;
   return issue_obj;
+}
+
+function extractText(obj) {
+  let textNodes = [];
+
+  for (let key in obj) {
+    if (key == "text") {
+      textNodes.push([obj[key]]);
+    }
+    if (typeof obj[key] === "object") {
+      textNodes.push(extractText(obj[key]));
+    }
+  }
+
+  return textNodes.flat();
 }
