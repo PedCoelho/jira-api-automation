@@ -9,6 +9,8 @@ var reportRouter = require("./routes/getsprintreport");
 
 var app = express();
 
+const cors = require("cors");
+
 /* ------------------------------ Dotenv setup ------------------------------ */
 const dotenv = require("dotenv");
 dotenv.config();
@@ -21,6 +23,7 @@ const API_BASE_URL = process.env.API_BASE_URL;
 axios.defaults.baseURL = API_BASE_URL;
 axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
 
+app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
